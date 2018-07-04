@@ -11,6 +11,8 @@ import {CoreRoutingModule} from "./core-routing.module";
 import {ColleagueComponent} from './colleague/colleague.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {ServicesComponent} from './services/services.component';
+import {ServicesService} from "./services/services.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -24,12 +26,16 @@ import {ServicesComponent} from './services/services.component';
     ],
     imports: [
         CommonModule,
+        HttpClientModule,
         CoreRoutingModule,
         HeaderModule,
         NavMenuModule,
     ],
     exports: [
         CoreRoutingModule,
+    ],
+    providers: [
+        ServicesService,
     ]
 })
 
