@@ -1,0 +1,21 @@
+.block {
+  border-bottom: 1px solid lightgrey;
+  &__ {
+    &title {
+      line-height: 1;
+    }
+  }
+}
+
+.fixed-height-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  overflow: hidden;
+  height: 200px;
+  p {
+    overflow: hidden;
+  }
+}

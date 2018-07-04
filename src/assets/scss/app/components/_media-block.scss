@@ -1,0 +1,21 @@
+.media {
+  line-height: 1.3;
+  &__ {
+    &title {
+      font-size: 1.15rem;
+    }
+  }
+  img {
+    display: block;
+    object-fit: cover;
+  }
+  p {
+    margin-bottom: .3rem;
+  }
+  &-small {
+    img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}

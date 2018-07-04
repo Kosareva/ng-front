@@ -1,35 +1,107 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+<header>
+  <div class="main-menu__responsive-navbar">
+    <a href="#topNavBar"
+       id="mainMenuToggle"
+       class="main-menu__toggle"
+       role="button"
+       aria-expanded="false"
+       aria-controls="main-menu"
+       aria-label="Open main menu">
+      <span class="fa fa-bars"></span>
+    </a>
   </div>
-</nav>
+  <div id="topNavBar" class="top-header__container" aria-hidden="true">
+    <div class="container">
+      <div class="top-header">
+        <div class="row">
+          <a href="#mainMenuToggle"
+             id="mainMenuClose"
+             class="main-menu__close"
+             role="button"
+             aria-expanded="false"
+             aria-controls="main-menu">
+            <span class="fa fa-close"></span>
+          </a>
+          <div class="col-12 col-md-auto mb-2 mb-md-0 justify-content-center justify-content-md-start">
+            <!--<img src="img/header/Logo.png" alt="logo" class="logo">-->
+            <img src="assets/img/header/logo.svg" alt="logo" class="logo">
+          </div>
+          <div class="col-12 col-md mb-3 mb-md-0 justify-content-center justify-content-md-start">
+            <div class="search-bar__container">
+              <i class="fa fa-search search-bar__icon"></i>
+              <input type="text" placeholder="Company name" class="search-bar rounded">
+            </div>
+          </div>
+          <div class="col-12 col-md-auto mb-2 mb-md-0">
+            <nav id="mainMenu"
+                 class="main-menu"
+                 role="navigation"
+                 aria-label="main menu">
+              <ul>
+                <li class="main-menu__item rounded">
+                  <a href="javascript:void(0)">
+                    <img src="assets/img/content_icons/navigation/Chat.png"
+                         alt="chat">
+                  </a>
+                </li>
+                <li class="main-menu__item rounded">
+                  <a href="javascript:void(0)">
+                    <img src="assets/img/content_icons/navigation/Notifications.png"
+                         alt="notifications">
+                  </a>
+                </li>
+                <li class="main-menu__item rounded d-md-none">
+                  <a href="javascript:void(0)">
+                    <i class="fa fa-user-o"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-12 col-md-auto mb-3 mb-md-0 d-none d-md-flex top-header__profile">
+            <div class="media user-block align-items-center">
+              <img class="mr-1 align-self-center rounded" src="assets/img/content_icons/featured/user.jpg"
+                   alt="Generic placeholder image">
+              <div class="media-body text-truncate">
+                Maximilian Beekeeper
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-md-none">
+            <ul class="horizontal-menu w-100">
+              <li class="horizontal-menu__item">
+                <a href="#">
+                  <img src="assets/img/content_icons/navigation/Feed.png" alt="feed">
+                  <span>Feed</span>
+                </a>
+              </li>
+              <li class="horizontal-menu__item">
+                <a href="#">
+                  <img src="assets/img/content_icons/navigation/Ask.png" alt="feed">
+                  <span>Ask a Colleague</span>
+                </a>
+              </li>
+              <li class="horizontal-menu__item">
+                <a href="#">
+                  <img src="assets/img/content_icons/navigation/Companies.png" alt="feed">
+                  <span>Companies</span>
+                </a>
+              </li>
+              <li class="horizontal-menu__item">
+                <a href="#">
+                  <img src="assets/img/content_icons/navigation/Services.png" alt="feed">
+                  <span>Service Directory</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#mainMenuToggle"
+     id="mainMenuBackdrop"
+     class="main-menu__backdrop"
+     tabindex="-1">
+  </a>
+</header>

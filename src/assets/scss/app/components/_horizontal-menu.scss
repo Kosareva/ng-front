@@ -1,0 +1,32 @@
+.horizontal-menu {
+  font-size: 1.15rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  &__ {
+    &item {
+      border-bottom: 1px solid lightgrey;
+      &:hover, &:focus, &.active {
+        background-color: darken($white, 1);
+      }
+    }
+  }
+  a {
+    display: flex;
+    align-items: center;
+    color: grey;
+    padding: 12px 0;
+    &:focus, &:visited, &:hover {
+      color: grey;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    margin-right: 23px;
+  }
+}

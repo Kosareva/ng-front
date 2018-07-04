@@ -1,0 +1,9 @@
+@mixin pseudo{
+  display: block;
+  position: absolute;
+  content: '';
+}
+
+.f-shrink-1{
+  flex-shrink: 1!important;
+}

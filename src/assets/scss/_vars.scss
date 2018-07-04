@@ -1,0 +1,35 @@
+// Font Awesome
+$fa-font-path: "assets/fonts";
+
+// Bootstrap vars customization"
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 970px, xl: 1440px);
+$container-max-widths: (sm: 540px, md: 720px, lg: 1440px, xl: 1440px);
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 2.15;
+$h2-font-size: $font-size-base * 1.72;
+$h3-font-size: $font-size-base * 1.505;
+$h4-font-size: $font-size-base * 1.29;
+$h5-font-size: $font-size-base * 1.075;
+$h6-font-size: $font-size-base;
+
+//---------- Custom vars ----------
+// font sizes
+$font-size-base-html: 14px;
+
+// z-index
+$zindex-sidenav-backdrop: 1031;
+$zindex-sidenav: 1032;
+$zindex-preloader: 1033;
+
+// sizes
+$top-header-height: 40px;
+$page-header-height: 300px;
+$aside-width: 300px;
+
+// colors
+$top-header-text-color: #fff;
+$accent: #87b448;
+$theme-colors: map-merge((
+        "gray": $gray-400,
+        "accent": $accent,
+), $theme-colors);
