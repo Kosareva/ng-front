@@ -5,9 +5,10 @@ import {ContactUsStartComponent} from "./contact-us-start/contact-us-start.compo
 
 const contactUsRoutes: Routes = [
     {
-        path: '', component: ContactUsComponent, children: [
-            {path: '', component: ContactUsStartComponent},
-        ]
+        // path: '', component: ContactUsComponent, children: [
+        //     {path: '', component: ContactUsStartComponent},
+        // ]
+        path: '', component: ContactUsComponent
     }
 ];
 

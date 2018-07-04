@@ -3,20 +3,19 @@ import {CommonModule} from "@angular/common";
 import {AppRoutingModule} from "../app-routing.module";
 
 import {HomeComponent} from './home/home.component';
-import { HeaderComponent } from './header/header.component';
+import {HeaderModule} from "../shared/header/header.module";
 
 @NgModule({
     declarations: [
         HomeComponent,
-        HeaderComponent,
     ],
     imports: [
         CommonModule,
         AppRoutingModule,
+        HeaderModule,
     ],
     exports: [
         AppRoutingModule,
-        HeaderComponent,
     ],
     providers: []
 })
