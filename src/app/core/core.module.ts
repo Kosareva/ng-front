@@ -8,9 +8,9 @@ import {SidebarRightComponent} from './sidebar-right/sidebar-right.component';
 import {NavMenuModule} from "../shared/nav-menu/nav-menu.module";
 import {CoreComponent} from "./core.component";
 import {CoreRoutingModule} from "./core-routing.module";
-import { ColleagueComponent } from './colleague/colleague.component';
-import { CompaniesComponent } from './companies/companies.component';
-import { ServicesComponent } from './services/services.component';
+import {ColleagueComponent} from './colleague/colleague.component';
+import {CompaniesComponent} from './companies/companies.component';
+import {ServicesComponent} from './services/services.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +28,9 @@ import { ServicesComponent } from './services/services.component';
         HeaderModule,
         NavMenuModule,
     ],
+    exports: [
+        CoreRoutingModule,
+    ]
 })
 
 export class CoreModule {

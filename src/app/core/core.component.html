@@ -1,4 +1,16 @@
 <app-header></app-header>
-<app-sidebar-left></app-sidebar-left>
-<router-outlet></router-outlet>
-<app-sidebar-right></app-sidebar-right>
+<div class="container">
+    <div class="row flex-lg-nowrap">
+        <div class="col-12 col-sm-6 col-lg-auto order-1 order-lg-0 mt-0">
+            <app-sidebar-left></app-sidebar-left>
+        </div>
+        <div class="col-12 col-sm-12 col-lg order-0 order-lg-1 mt-2 f-shrink-1 p-md-0">
+            <section class="main-content">
+                <router-outlet></router-outlet>
+            </section>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-auto order-2 mt-3">
+            <app-sidebar-right></app-sidebar-right>
+        </div>
+    </div>
+</div>
