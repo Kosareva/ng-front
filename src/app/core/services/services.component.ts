@@ -5,7 +5,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 @Component({
     selector: 'app-services',
     templateUrl: './services.component.html',
-    styleUrls: ['./services.component.scss']
+    styleUrls: ['./services.component.scss'],
 })
 export class ServicesComponent implements OnInit, OnDestroy {
 
@@ -17,12 +17,22 @@ export class ServicesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.servicesService.fetchServices();
+        this.servicesService.fetchServices()
+            .subscribe((services: any) => {
+                console.log('services: ', services);
+                this.servicesService.setServices(services.data);
+            });
+        // .subscribe(
+        //     (services: any) => {
+        //         this.servicesService.setServices(services.data);
+        //     },
+        //     (error) => {
+        //         this.errors.push(error.error.error.description);
+        //     });
         this.subscription = this.servicesService.servicesFetched.subscribe((services) => {
             this.services = services;
-            console.log(this.services);
         });
-        // this.services = this.servicesService.getServices();
+        this.services = this.servicesService.getServices();
     }
 
     ngOnDestroy() {

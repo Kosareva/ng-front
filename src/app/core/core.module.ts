@@ -12,7 +12,6 @@ import {ColleagueComponent} from './colleague/colleague.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {ServicesComponent} from './services/services.component';
 import {ServicesService} from "./services/services.service";
-import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -26,7 +25,6 @@ import {HttpClientModule} from "@angular/common/http";
     ],
     imports: [
         CommonModule,
-        HttpClientModule,
         CoreRoutingModule,
         HeaderModule,
         NavMenuModule,
