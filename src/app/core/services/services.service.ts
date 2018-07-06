@@ -3,17 +3,18 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {of} from "rxjs/internal/observable/of";
 import {map} from "rxjs/operators";
+import {Service} from "./service.model";
 
 @Injectable()
 
 export class ServicesService {
 
-    services: Array<any>;
+    services: Service[];
 
     constructor(private httpClient: HttpClient) {
     }
 
-    getServices(): Observable<Array<any>> {
+    getServices(): Observable<Service[]> {
 
         if (this.services) {
             return of(this.services);
@@ -24,7 +25,7 @@ export class ServicesService {
             return this.httpClient.get('http://504080.com/api/v1/services/categories', {
                 headers: authHeader,
             }).pipe(
-                map(res => {
+                map((res: any) => {
                         this.services = res.data;
                         return res.data;
                     }

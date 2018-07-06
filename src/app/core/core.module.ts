@@ -10,10 +10,8 @@ import {CoreComponent} from "./core.component";
 import {CoreRoutingModule} from "./core-routing.module";
 import {ColleagueComponent} from './colleague/colleague.component';
 import {CompaniesComponent} from './companies/companies.component';
-import {ServicesComponent} from './services/services.component';
-import {ServicesService} from "./services/services.service";
 import {PreloaderLocalModule} from "../shared/preloader-local/preloader-local.module";
-import { ServicesListComponent } from './services/services-list/services-list.component';
+import {ServicesModule} from "./services/services.module";
 
 @NgModule({
     declarations: [
@@ -23,22 +21,17 @@ import { ServicesListComponent } from './services/services-list/services-list.co
         HomeComponent,
         ColleagueComponent,
         CompaniesComponent,
-        ServicesComponent,
-        ServicesListComponent,
     ],
     imports: [
         CommonModule,
         CoreRoutingModule,
         HeaderModule,
         NavMenuModule,
-        PreloaderLocalModule,
+        ServicesModule,
     ],
     exports: [
         CoreRoutingModule,
     ],
-    providers: [
-        ServicesService,
-    ]
 })
 
 export class CoreModule {
