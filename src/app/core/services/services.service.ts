@@ -1,40 +1,38 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Subject} from "rxjs/internal/Subject";
+import {Observable} from "rxjs/internal/Observable";
+import {of} from "rxjs/internal/observable/of";
+import {map} from "rxjs/operators";
 
 @Injectable()
+
 export class ServicesService {
 
-    private services = [];
-    servicesFetched = new Subject();
+    services: Array<any>;
 
     constructor(private httpClient: HttpClient) {
     }
 
-    fetchServices() {
+    getServices(): Observable<Array<any>> {
 
-        const authHeader = new HttpHeaders().set('Authorization', '160f6b8e551b36fae8ae8fc4dc704b685c0380c9');
+        if (this.services) {
+            return of(this.services);
+        } else {
 
-        return this.httpClient.get('http://504080.com/api/v1/services/categories', {
-            headers: authHeader,
-        });
-            // .subscribe(
-            //     (services: any) => {
-            //         this.setServices(services.data);
-            //     },
-            //     (error) => {
-            //         console.log(error);
-            //     });
+            const authHeader = new HttpHeaders().set('Authorization', 'cfc91f91e85de1b1ac2b487f9d3984ea60260a2e');
 
-    }
+            return this.httpClient.get('http://504080.com/api/v1/services/categories', {
+                headers: authHeader,
+            }).pipe(
+                map(res => {
+                        this.services = res.data;
+                        return res.data;
+                    }
+                )
+            );
 
-    setServices(services) {
-        this.services = services;
-        this.servicesFetched.next(this.services.slice());
-    }
+        }
 
-    getServices() {
-        return this.services.slice();
     }
 
 }

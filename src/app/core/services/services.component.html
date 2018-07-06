@@ -3,14 +3,11 @@
     <button type="button" class="btn btn-accent btn-narrow">Add New Service</button>
 </div>
 <div class="main-content__body rounded mt-3">
-    <div class="services-module">
-        <div class="category-item" *ngFor="let service of services">
-            <div>
-                <img src="{{service.icon}}" alt="category">
-            </div>
-            <div class="media-body">
-                <p class="mt-2"><a href="#">{{service.title}}</a></p>
-            </div>
-        </div>
-    </div>
+    <ng-template #preloader>
+        <app-preloader-local></app-preloader-local>
+    </ng-template>
+    <app-services-list class="services-module"
+                       *ngIf="services$ | async as services; else preloader"
+                       [services]="services">
+    </app-services-list>
 </div>

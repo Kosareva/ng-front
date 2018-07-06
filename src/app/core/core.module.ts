@@ -12,6 +12,8 @@ import {ColleagueComponent} from './colleague/colleague.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {ServicesComponent} from './services/services.component';
 import {ServicesService} from "./services/services.service";
+import {PreloaderLocalModule} from "../shared/preloader-local/preloader-local.module";
+import { ServicesListComponent } from './services/services-list/services-list.component';
 
 @NgModule({
     declarations: [
@@ -22,12 +24,14 @@ import {ServicesService} from "./services/services.service";
         ColleagueComponent,
         CompaniesComponent,
         ServicesComponent,
+        ServicesListComponent,
     ],
     imports: [
         CommonModule,
         CoreRoutingModule,
         HeaderModule,
         NavMenuModule,
+        PreloaderLocalModule,
     ],
     exports: [
         CoreRoutingModule,
