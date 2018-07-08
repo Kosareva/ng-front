@@ -1,4 +1,166 @@
-<app-header2></app-header2>
-<p>
-    contact-us works!
-</p>
+<div class="page__header">
+    <div id="topNavBar" class="top-header__container_transparent pt-3">
+        <div class="container">
+            <div class="top-header">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-md-auto mb-2 mb-md-0 justify-content-center justify-content-md-start">
+                        <img src="assets/img/header/Logo.png" alt="logo" class="logo">
+                    </div>
+                    <div class="col-12 col-md-auto mb-3 mb-md-0 justify-content-center justify-content-md-start  pt-3 pt-md-0">
+                        <button type="button" class="btn btn-accent btn-narrow">Log In Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-5 fixed-height-block invert">
+                <h1 class="mt-2 invert">Home of Density</h1>
+                <p>Denteez was created by dentists for dentistry in order to make the life of
+                    everyone involved in dentistry easier.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page__section page__body">
+    <div class="container">
+        <form novalidate id="contactUsForm"
+              class="row align-items-center flex-column needs-validation">
+            <div class="col-12 col-md-8 page__body-content rounded pt-3">
+                <div class="row">
+                    <div class="col-12 text-danger" id="errors"></div>
+                    <p class="col-12 text-muted">Fields marked "*" are required</p>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="enquiryType">Enquiry Type<sup>*</sup></label>
+                            <select class="form-control form-control-lg"
+                                    id="enquiryType"
+                                    name="enquiryType"
+                                    required>
+                            </select>
+                            <input class="form-control form-control-lg mt-3"
+                                   type="text"
+                                   placeholder="Other"
+                                   id="enquiryTypeOther"
+                                   name="enquiryTypeOther"
+                                   hidden>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="enquiryType">Name<sup>*</sup></label>
+                            <input class="form-control form-control-lg"
+                                   placeholder="Name"
+                                   type="text"
+                                   id="name"
+                                   name="name"
+                                   required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email<sup>*</sup></label>
+                            <input class="form-control form-control-lg"
+                                   type="email"
+                                   placeholder="name@example.com"
+                                   id="email"
+                                   name="email"
+                                   required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="email">Subject<sup>*</sup></label>
+                            <input class="form-control form-control-lg"
+                                   type="text"
+                                   placeholder="Subject"
+                                   id="subject"
+                                   name="subject"
+                                   required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="description" class="d-flex justify-content-between">
+                                <span>Description<sup>*</sup></span>
+                                <span>(<span id="descriptionLength">0</span>/1000)</span>
+                            </label>
+                            <textarea class="form-control"
+                                      rows="5"
+                                      id="description"
+                                      name="description"
+                                      required></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                        <div class="form-group form-group__attachment">
+                            <div class="embed-responsive embed-responsive-1by1">
+                                <div class="embed-responsive-item p-3 bg-light rounded border border-gray ">
+                                    <label for="attachment" class="text-muted">
+                                        <div>Add photo</div>
+                                        <small>Minimum size of 300x300 jpeg jpg png 5 MB</small>
+                                    </label>
+                                    <input class="form-control-file"
+                                           type="file"
+                                           accept="image/png, image/jpeg, image/jpg"
+                                           id="attachment"
+                                           name="attachment"
+                                           hidden>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div id="deleteAttachment" class="delete-attachment d-none">&#9760;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 pl-0 pr-0 mt-3">
+                <button type="submit" class="btn btn-accent btn-lg w-100">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="page__section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h2 class="text-center">About Denteez</h2>
+            </div>
+            <div class="col-6 col-md-6">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias distinctio dolorum explicabo fugit iste
+                maxime necessitatibus, neque veniam vero voluptas! Accusamus accusantium aliquam aspernatur cumque dicta
+                dolor eveniet, iusto modi? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias distinctio.
+            </div>
+            <div class="col-6 col-md-6">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias distinctio dolorum explicabo fugit iste
+                maxime necessitatibus, neque veniam vero voluptas! Accusamus accusantium aliquam aspernatur cumque dicta
+                dolor eveniet, iusto modi? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias distinctio.
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="page__footer pt-4 pb-4">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-auto">
+                Denteez Copyright 2018
+            </div>
+            <div class="col-auto">
+                <nav class="page__footer-nav">
+                    <ul>
+                        <li><a href="javascript:void(0)">Support</a></li>
+                        <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)">Terms of Use</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</footer>

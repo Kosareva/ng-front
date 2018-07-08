@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {ContactUsComponent} from "./contact-us.component";
 import {ContactUsRoutingModule} from "./contact-us-routing.module";
-import {Header2Module} from "../shared/header2/header2.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -12,7 +12,7 @@ import {Header2Module} from "../shared/header2/header2.module";
     imports: [
         CommonModule,
         ContactUsRoutingModule,
-        Header2Module,
+        FormsModule,
     ],
 })
 export class ContactUsModule {
