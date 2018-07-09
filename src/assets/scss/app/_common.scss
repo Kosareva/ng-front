@@ -142,6 +142,11 @@ h1, h2, h3, h4, h5, h6 {
   sup {
     margin-left: 5px;
   }
+  .invalid-feedback{
+    color: red;
+    font-size: 100%;
+    display: inline-block;
+  }
 }
 
 .delete-attachment{

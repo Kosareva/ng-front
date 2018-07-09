@@ -1,0 +1,126 @@
+<ng-template #preloader>
+    <app-preloader-local></app-preloader-local>
+</ng-template>
+<form class="row align-items-center flex-column needs-validation"
+      id="contactUsForm"
+      [formGroup]="form"
+      *ngIf="initialized; else preloader"
+      (ngSubmit)="onSubmit()"
+      novalidate>
+    <div class="col-12 col-md-8 page__body-content rounded pt-3">
+        <div class="row">
+            <div class="col-12 text-danger" id="errors"></div>
+            <p class="col-12 text-muted">Fields marked "*" are required</p>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="enquiryType">Enquiry Type<sup>*</sup></label>
+                    <select class="form-control form-control-lg"
+                            id="enquiryType"
+                            name="enquiryType"
+                            formControlName="enquiryType">
+                        <option *ngFor="let enquiryType of enquiryTypes; let i = index"
+                                [value]="enquiryType"
+                                [selected]="i==0">
+                            {{enquiryType}}
+                        </option>
+                    </select>
+                    <!--<input class="form-control form-control-lg mt-3"-->
+                    <!--type="text"-->
+                    <!--placeholder="Other"-->
+                    <!--id="enquiryTypeOther"-->
+                    <!--name="enquiryTypeOther"-->
+                    <!--hidden>-->
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="name">Name<sup>*</sup></label>
+                    <input class="form-control form-control-lg"
+                           placeholder="Name"
+                           type="text"
+                           id="name"
+                           name="name"
+                           formControlName="name">
+                    <div class="invalid-feedback"
+                         *ngIf="!form.get('name').valid && form.get('name').touched">
+                        Please, enter name
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="email">Email<sup>*</sup></label>
+                    <input class="form-control form-control-lg"
+                           type="email"
+                           placeholder="name@example.com"
+                           id="email"
+                           name="email"
+                           formControlName="email">
+                    <div class="invalid-feedback"
+                         *ngIf="!form.get('email').valid && form.get('email').touched">
+                        Please, enter a valid email
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="subject">Subject<sup>*</sup></label>
+                    <input class="form-control form-control-lg"
+                           type="text"
+                           placeholder="Subject"
+                           id="subject"
+                           name="subject"
+                           formControlName="subject">
+                    <div class="invalid-feedback"
+                         *ngIf="!form.get('subject').valid && form.get('subject').touched">
+                        Please, enter subject
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="description" class="d-flex justify-content-between">
+                        <span>Description<sup>*</sup></span>
+                        <span>(<span id="descriptionLength">0</span>/1000)</span>
+                    </label>
+                    <textarea class="form-control"
+                              rows="5"
+                              id="description"
+                              name="description"
+                              formControlName="description"></textarea>
+                    <div class="invalid-feedback"
+                         *ngIf="!form.get('description').valid && form.get('description').touched">
+                        Please, enter a valid description
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+                <div class="form-group form-group__attachment">
+                    <div class="embed-responsive embed-responsive-1by1">
+                        <div class="embed-responsive-item p-3 bg-light rounded border border-gray ">
+                            <label for="attachment" class="text-muted">
+                                <div>Add photo</div>
+                                <small>Minimum size of 300x300 jpeg jpg png 5 MB</small>
+                            </label>
+                            <input class="form-control-file"
+                                   type="file"
+                                   accept="image/png, image/jpeg, image/jpg"
+                                   id="attachment"
+                                   name="attachment"
+                                   formControlName="attachment"
+                                   hidden>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div id="deleteAttachment" class="delete-attachment d-none">&#9760;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-8 pl-0 pr-0 mt-3">
+        <button class="btn btn-accent btn-lg w-100"
+                type="submit">
+            Submit
+        </button>
+    </div>
+</form>
