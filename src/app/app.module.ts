@@ -6,8 +6,8 @@ import {AppComponent} from './app.component';
 import {CoreModule} from "./core/core.module"
 import {AppRoutingModule} from "./app-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {ErrorHandler} from "./error-handling/error-handler";
-import {RequestInterceptor} from "./error-handling/http-interceptor";
+import {ErrorHandler} from "./shared/error-handling/error-handler";
+import {RequestInterceptor} from "./shared/error-handling/http-interceptor";
 
 @NgModule({
     declarations: [

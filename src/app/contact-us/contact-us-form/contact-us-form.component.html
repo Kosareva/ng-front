@@ -24,12 +24,25 @@
                             {{enquiryType}}
                         </option>
                     </select>
-                    <!--<input class="form-control form-control-lg mt-3"-->
-                    <!--type="text"-->
-                    <!--placeholder="Other"-->
-                    <!--id="enquiryTypeOther"-->
-                    <!--name="enquiryTypeOther"-->
-                    <!--hidden>-->
+                    <div class="invalid-feedback"
+                         *ngIf="!form.get('enquiryType').valid && form.get('enquiryType').touched">
+                        <p *ngIf="form.get('enquiryType').hasError('required')">
+                            Required
+                        </p>
+                    </div>
+                    <input class="form-control form-control-lg mt-3"
+                           type="text"
+                           placeholder="Other"
+                           id="enquiryTypeOther"
+                           name="enquiryTypeOther"
+                           formControlName="enquiryTypeOther"
+                           *ngIf="form.get('enquiryType').value === 'Other'">
+                    <div class="invalid-feedback"
+                         *ngIf="form.get('enquiryTypeOther') && !form.get('enquiryTypeOther').valid && form.get('enquiryTypeOther').touched">
+                        <p *ngIf="form.get('enquiryTypeOther').hasError('required')">
+                            Required
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-6">
@@ -43,7 +56,9 @@
                            formControlName="name">
                     <div class="invalid-feedback"
                          *ngIf="!form.get('name').valid && form.get('name').touched">
-                        Please, enter name
+                        <p *ngIf="form.get('name').hasError('required')">
+                            Required
+                        </p>
                     </div>
                 </div>
             </div>
@@ -58,7 +73,12 @@
                            formControlName="email">
                     <div class="invalid-feedback"
                          *ngIf="!form.get('email').valid && form.get('email').touched">
-                        Please, enter a valid email
+                        <p *ngIf="form.get('email').hasError('required')">
+                            Required
+                        </p>
+                        <p *ngIf="form.get('email').hasError('email')">
+                            Wrong email format
+                        </p>
                     </div>
                 </div>
             </div>
@@ -73,7 +93,9 @@
                            formControlName="subject">
                     <div class="invalid-feedback"
                          *ngIf="!form.get('subject').valid && form.get('subject').touched">
-                        Please, enter subject
+                        <p *ngIf="form.get('subject').hasError('required')">
+                            Required
+                        </p>
                     </div>
                 </div>
             </div>
@@ -81,7 +103,7 @@
                 <div class="form-group">
                     <label for="description" class="d-flex justify-content-between">
                         <span>Description<sup>*</sup></span>
-                        <span>(<span id="descriptionLength">0</span>/1000)</span>
+                        <span>({{descriptionLength}}/1000)</span>
                     </label>
                     <textarea class="form-control"
                               rows="5"
@@ -90,7 +112,13 @@
                               formControlName="description"></textarea>
                     <div class="invalid-feedback"
                          *ngIf="!form.get('description').valid && form.get('description').touched">
-                        Please, enter a valid description
+                        <p *ngIf="form.get('description').hasError('required')">
+                            Required
+                        </p>
+                        <p *ngIf="form.get('description').hasError('maxlength')">
+                            Description is longer than {{form.get('description').errors.maxlength.requiredLength}}
+                            characters
+                        </p>
                     </div>
                 </div>
             </div>
