@@ -10,8 +10,10 @@ import {CoreComponent} from "./core.component";
 import {CoreRoutingModule} from "./core-routing.module";
 import {ColleagueComponent} from './colleague/colleague.component';
 import {CompaniesComponent} from './companies/companies.component';
-import {PreloaderLocalModule} from "../shared/preloader-local/preloader-local.module";
 import {ServicesModule} from "./services/services.module";
+import {ErrorHandler} from "../error-handling/error-handler";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {RequestInterceptor} from "../error-handling/http-interceptor";
 
 @NgModule({
     declarations: [
@@ -32,6 +34,14 @@ import {ServicesModule} from "./services/services.module";
     exports: [
         CoreRoutingModule,
     ],
+    providers: [
+        ErrorHandler,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestInterceptor,
+            multi: true,
+        }
+    ]
 })
 
 export class CoreModule {
