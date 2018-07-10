@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable()
 export class ErrorHandler {
 
-    constructor() {
+    constructor(private toastr: ToastrService) {
     }
 
     handleError(error: Error | HttpErrorResponse) {
@@ -28,7 +29,7 @@ export class ErrorHandler {
 
         console.error(error);
 
-        alert(msg);
+        this.toastr.error(msg, 'Error!');
     }
 
 }

@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {Observable} from "rxjs/internal/Observable";
 import {concatMap} from "rxjs/operators";
 import {of} from "rxjs/internal/observable/of";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-contact-us-form',
@@ -35,7 +36,10 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
     ];
     fileErrors = [];
 
-    constructor(private contactUsFormService: ContactUsFormService) {
+    constructor(
+        private contactUsFormService: ContactUsFormService,
+        private toastr: ToastrService
+    ) {
     }
 
     mbTokb(mb) {
@@ -199,7 +203,7 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
 
         this.subscriptions.add(this.contactUsFormService.sendForm(formData)
             .subscribe((data) => {
-                alert(data);
+                this.toastr.success(data, 'Success!');
             }));
 
     }
