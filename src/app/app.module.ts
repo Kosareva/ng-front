@@ -20,7 +20,7 @@ import {RequestInterceptor} from "./shared/error-handling/http-interceptor";
         CoreModule,
     ],
     exports: [
-        AppRoutingModule
+        AppRoutingModule,
     ],
     providers: [
         ErrorHandler,

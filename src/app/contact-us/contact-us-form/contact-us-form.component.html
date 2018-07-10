@@ -125,7 +125,14 @@
             <div class="col-12 col-sm-5 col-md-4 col-lg-3">
                 <div class="form-group form-group__attachment">
                     <div class="embed-responsive embed-responsive-1by1">
-                        <div class="embed-responsive-item p-3 bg-light rounded border border-gray ">
+                        <div class="embed-responsive-item p-3 bg-light rounded border border-gray"
+                             (click)="file.click()">
+                            <div class="image-preview-container"
+                                 *ngIf="previewUrl">
+                                <img class="attachment-preview"
+                                     alt="photo attachment"
+                                     [src]="previewUrl">
+                            </div>
                             <label for="attachment" class="text-muted">
                                 <div>Add photo</div>
                                 <small>Minimum size of 300x300 jpeg jpg png 5 MB</small>
@@ -136,6 +143,8 @@
                                    id="attachment"
                                    name="attachment"
                                    formControlName="attachment"
+                                   #file
+                                   (change)="onFileChange($event)"
                                    hidden>
                             <div class="invalid-feedback"></div>
                         </div>

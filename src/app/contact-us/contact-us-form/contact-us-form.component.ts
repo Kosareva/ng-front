@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ContactUsFormService} from "./contact-us-form.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {Observable} from "rxjs/internal/Observable";
 import {concatMap} from "rxjs/operators";
 import {of} from "rxjs/internal/observable/of";
-import {forEach} from "@angular/router/src/utils/collection";
+import {fileUploadValidator} from "../../shared/validators/file-upload-validator";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'app-contact-us-form',
@@ -14,14 +15,21 @@ import {forEach} from "@angular/router/src/utils/collection";
 })
 export class ContactUsFormComponent implements OnInit, OnDestroy {
 
+    @ViewChild('file') file;
+    @ViewChild('fileContainer') fileContainer;
+
     form: FormGroup;
     initSubscription: Subscription;
     enquiryTypeSubscription: Subscription;
     enquiryTypes: Array<string>;
     initialized: boolean = false;
     descriptionLength: number = 0;
+    previewUrl: string;
 
-    constructor(private contactUsFormService: ContactUsFormService) {
+    constructor(
+        private contactUsFormService: ContactUsFormService,
+        private httpClient: HttpClient,
+    ) {
     }
 
     addOtherOption() {
@@ -64,11 +72,34 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
                 Validators.required,
                 Validators.maxLength(1000),
             ]),
-            'attachment': new FormControl(null),
+            'attachment': new FormControl(null, fileUploadValidator(10)),
         });
 
         return of(true);
 
+    }
+
+    onFileChange(event) {
+        // let file = event.target.files[0];
+        // let img = new Image();
+        // if (file) {
+        //     let reader = new FileReader();
+        //     reader.onload = () => {
+        //         this.form.patchValue({
+        //             'attachment': reader.result
+        //         });
+        //         // img.src = reader.result;
+        //         // this.previewUrl = reader.result;
+        //     };
+        //     console.log(reader.readAsDataURL(file));
+        // }
+        // this.httpClient.post('gs://ang-firebase-gallery.appspot.com/uploads', this.selectedFile)
+        //     .subscribe();
+    }
+
+    onSubmit() {
+        this.markAsTouchedAll();
+        console.log(this.form);
     }
 
     ngOnInit() {
@@ -98,15 +129,15 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.countDescriptionLength();
             });
+        this.form.get('attachment').valueChanges
+            .subscribe((data) => {
+
+            });
     }
 
     ngOnDestroy() {
         this.initSubscription.unsubscribe();
         this.enquiryTypeSubscription.unsubscribe();
-    }
-
-    onSubmit() {
-        this.markAsTouchedAll();
     }
 
 }
