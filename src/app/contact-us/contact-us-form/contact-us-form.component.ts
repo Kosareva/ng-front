@@ -5,8 +5,6 @@ import {Subscription} from "rxjs/internal/Subscription";
 import {Observable} from "rxjs/internal/Observable";
 import {concatMap} from "rxjs/operators";
 import {of} from "rxjs/internal/observable/of";
-import {fileUploadValidator} from "../../shared/validators/file-upload-validator";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'app-contact-us-form',
@@ -16,25 +14,123 @@ import {HttpClient} from "@angular/common/http";
 export class ContactUsFormComponent implements OnInit, OnDestroy {
 
     @ViewChild('file') file;
-    @ViewChild('fileContainer') fileContainer;
+    @ViewChild('fileDelete') fileDelete;
 
     form: FormGroup;
-    initSubscription: Subscription;
     enquiryTypeSubscription: Subscription;
     enquiryTypes: Array<string>;
-    initialized: boolean = false;
     descriptionLength: number = 0;
     previewUrl: string;
+    subscriptions = new Subscription();
+    initialized: boolean = false;
+    fileValid: boolean = false;
 
-    constructor(
-        private contactUsFormService: ContactUsFormService,
-        private httpClient: HttpClient,
-    ) {
+    fileMaxSizeMb = 5;
+    fileMinWidth = 300;
+    fileMinHeight = 300;
+    fileTypes = [
+        'image/jpeg',
+        'image/jpg',
+        'image/png'
+    ];
+    fileErrors = [];
+
+    constructor(private contactUsFormService: ContactUsFormService) {
+    }
+
+    mbTokb(mb) {
+        return mb * 1024 * 1024;
+    }
+
+    validateFileSize(file): Observable<any> {
+
+        return Observable.create((observer) => {
+
+            if (file.size > this.mbTokb(this.fileMaxSizeMb)) {
+                observer.error(`File size must be < ${this.fileMaxSizeMb} MB`);
+            }
+            else {
+                observer.next(true);
+            }
+
+        });
+
+    }
+
+    validateFileType(file): Observable<any> {
+
+        return Observable.create((observer) => {
+
+            if (this.fileTypes.indexOf(file.type) === -1) {
+                observer.error(`Wrong file type`);
+            }
+            else {
+                observer.next(true);
+            }
+
+        });
+
+    }
+
+    validateFileDimension(file): Observable<any> {
+
+        return Observable.create((obs) => {
+
+            const reader = new FileReader();
+
+            reader.onerror = err => obs.error(err);
+            reader.onabort = err => obs.error(err);
+            reader.onload = () => obs.next(reader.result);
+            reader.onloadend = () => obs.complete();
+
+            return reader.readAsDataURL(file);
+
+        }).pipe(
+            concatMap(
+                (data) => {
+
+                    return Observable.create((obs) => {
+
+                        let img = new Image();
+                        img.src = data as string;
+
+                        let width = img.naturalWidth;
+                        let height = img.naturalHeight;
+
+                        if (width < this.fileMinWidth || height < this.fileMinHeight) {
+                            obs.error('Image is less than 300x300');
+                        }
+                        else {
+                            obs.next(true);
+                        }
+
+                    });
+                }
+            )
+        );
+
+    }
+
+    createFilePreview(file) {
+        let reader = new FileReader();
+        reader.onload = () => {
+            this.previewUrl = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    resetFile() {
+        this.previewUrl = '';
+        this.file.nativeElement.value = '';
+    }
+
+    clearFileErrors() {
+        this.fileErrors = [];
     }
 
     addOtherOption() {
-        this.form.addControl('enquiryTypeOther', new FormControl(null, Validators.required));
-        this.enquiryTypeSubscription = this.form.get('enquiryTypeOther').valueChanges
+        this.form.addControl('enquiry_type_other', new FormControl(null, Validators.required));
+        this.enquiryTypeSubscription = this.form.get('enquiry_type_other').valueChanges
             .subscribe(() => {
             });
     }
@@ -43,11 +139,16 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
         if (this.enquiryTypeSubscription) {
             this.enquiryTypeSubscription.unsubscribe();
         }
-        this.form.removeControl('enquiryTypeOther');
+        this.form.removeControl('enquiry_type_other');
     };
 
     countDescriptionLength() {
-        this.descriptionLength = this.form.get('description').value.length;
+        if (this.form.get('description').value) {
+            this.descriptionLength = this.form.get('description').value.length;
+        }
+        else {
+            this.descriptionLength = 0;
+        }
     }
 
     markAsTouchedAll() {
@@ -61,8 +162,8 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
         this.enquiryTypes = types;
 
         this.form = new FormGroup({
-            'enquiryType': new FormControl(types[0]),
-            'name': new FormControl(null, Validators.required),
+            'enquiry_type': new FormControl(this.enquiryTypes[0], Validators.required),
+            'user_name': new FormControl(null, Validators.required),
             'email': new FormControl(null, [
                 Validators.required,
                 Validators.email,
@@ -72,38 +173,54 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
                 Validators.required,
                 Validators.maxLength(1000),
             ]),
-            'attachment': new FormControl(null, fileUploadValidator(10)),
         });
 
         return of(true);
 
     }
 
-    onFileChange(event) {
-        // let file = event.target.files[0];
-        // let img = new Image();
-        // if (file) {
-        //     let reader = new FileReader();
-        //     reader.onload = () => {
-        //         this.form.patchValue({
-        //             'attachment': reader.result
-        //         });
-        //         // img.src = reader.result;
-        //         // this.previewUrl = reader.result;
-        //     };
-        //     console.log(reader.readAsDataURL(file));
-        // }
-        // this.httpClient.post('gs://ang-firebase-gallery.appspot.com/uploads', this.selectedFile)
-        //     .subscribe();
+    resetForm() {
+        this.removeOtherOption();
+        this.form.reset();
+        this.form.controls['enquiry_type'].setValue(this.enquiryTypes[0], {onlySelf: true});
+        this.resetFile();
     }
 
-    onSubmit() {
-        this.markAsTouchedAll();
-        console.log(this.form);
+    sendForm() {
+        let formData = new FormData();
+
+        Object.keys(this.form.value).forEach((key, ind) => {
+            formData.append(key, this.form.value[key]);
+        });
+
+        if (this.fileValid && this.file.nativeElement.files[0]) {
+            formData.append('file', this.file.nativeElement.files[0]);
+        }
+
+        this.subscriptions.add(this.contactUsFormService.sendForm(formData)
+            .subscribe((data) => {
+                alert(data);
+            }));
+
+    }
+
+    afterInit() {
+        this.subscriptions.add(this.form.get('enquiry_type').valueChanges
+            .subscribe(() => {
+                if (this.form.get('enquiry_type').value === 'Other') {
+                    this.addOtherOption();
+                } else {
+                    this.removeOtherOption();
+                }
+            }));
+        this.subscriptions.add(this.form.get('description').statusChanges
+            .subscribe(() => {
+                this.countDescriptionLength();
+            }));
     }
 
     ngOnInit() {
-        this.initSubscription = this.contactUsFormService.getEnquiryTypes()
+        this.subscriptions.add(this.contactUsFormService.getEnquiryTypes()
             .pipe(
                 concatMap((types) => {
                     return this.initForm(types);
@@ -113,31 +230,53 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
                     this.initialized = true;
                     this.afterInit();
                 }
-            );
+            ));
     }
 
-    afterInit() {
-        this.form.get('enquiryType').valueChanges
-            .subscribe(() => {
-                if (this.form.get('enquiryType').value === 'Other') {
-                    this.addOtherOption();
-                } else {
-                    this.removeOtherOption();
+    onFileChange(event) {
+        this.clearFileErrors();
+        this.fileValid = false;
+        let file = event.target.files[0] ? event.target.files[0] : null;
+        if (!!file) {
+            this.validateFileType(file)
+                .pipe(
+                    concatMap(() => {
+                        return this.validateFileSize(file);
+                    }),
+                    concatMap(() => {
+                        return this.validateFileDimension(file);
+                    })
+                ).subscribe(() => {
+                    this.createFilePreview(file);
+                    this.fileValid = true;
+                },
+                (error) => {
+                    this.resetFile();
+                    this.fileErrors.push(error);
                 }
-            });
-        this.form.get('description').valueChanges
-            .subscribe(() => {
-                this.countDescriptionLength();
-            });
-        this.form.get('attachment').valueChanges
-            .subscribe((data) => {
+            );
+        }
+    }
 
-            });
+    onPreviewDelete() {
+        this.resetFile();
+    }
+
+    onSubmit() {
+
+        if (this.form.valid) {
+            this.sendForm();
+            this.resetForm();
+        }
+        else {
+            this.markAsTouchedAll();
+        }
+
     }
 
     ngOnDestroy() {
-        this.initSubscription.unsubscribe();
         this.enquiryTypeSubscription.unsubscribe();
+        this.subscriptions.unsubscribe();
     }
 
 }

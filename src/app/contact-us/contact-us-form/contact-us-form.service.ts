@@ -21,4 +21,13 @@ export class ContactUsFormService {
             );
     }
 
+    sendForm(formData) {
+        return this.httpClient.post('http://504080.com/api/v1/support', formData)
+            .pipe(
+                map((res: any) => {
+                    return res.data.message;
+                })
+            );
+    }
+
 }

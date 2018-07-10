@@ -17,16 +17,15 @@
                     <select class="form-control form-control-lg"
                             id="enquiryType"
                             name="enquiryType"
-                            formControlName="enquiryType">
-                        <option *ngFor="let enquiryType of enquiryTypes; let i = index"
-                                [value]="enquiryType"
-                                [selected]="i==0">
+                            formControlName="enquiry_type">
+                        <option *ngFor="let enquiryType of enquiryTypes"
+                                [value]="enquiryType">
                             {{enquiryType}}
                         </option>
                     </select>
                     <div class="invalid-feedback"
-                         *ngIf="!form.get('enquiryType').valid && form.get('enquiryType').touched">
-                        <p *ngIf="form.get('enquiryType').hasError('required')">
+                         *ngIf="!form.get('enquiry_type').valid && form.get('enquiry_type').touched">
+                        <p *ngIf="form.get('enquiry_type').hasError('required')">
                             Required
                         </p>
                     </div>
@@ -35,11 +34,11 @@
                            placeholder="Other"
                            id="enquiryTypeOther"
                            name="enquiryTypeOther"
-                           formControlName="enquiryTypeOther"
-                           *ngIf="form.get('enquiryType').value === 'Other'">
+                           formControlName="enquiry_type_other"
+                           *ngIf="form.get('enquiry_type').value === 'Other'">
                     <div class="invalid-feedback"
-                         *ngIf="form.get('enquiryTypeOther') && !form.get('enquiryTypeOther').valid && form.get('enquiryTypeOther').touched">
-                        <p *ngIf="form.get('enquiryTypeOther').hasError('required')">
+                         *ngIf="form.get('enquiry_type_other') && !form.get('enquiry_type_other').valid && form.get('enquiry_type_other').touched">
+                        <p *ngIf="form.get('enquiry_type_other').hasError('required')">
                             Required
                         </p>
                     </div>
@@ -53,10 +52,10 @@
                            type="text"
                            id="name"
                            name="name"
-                           formControlName="name">
+                           formControlName="user_name">
                     <div class="invalid-feedback"
-                         *ngIf="!form.get('name').valid && form.get('name').touched">
-                        <p *ngIf="form.get('name').hasError('required')">
+                         *ngIf="!form.get('user_name').valid && form.get('user_name').touched">
+                        <p *ngIf="form.get('user_name').hasError('required')">
                             Required
                         </p>
                     </div>
@@ -135,21 +134,34 @@
                             </div>
                             <label for="attachment" class="text-muted">
                                 <div>Add photo</div>
-                                <small>Minimum size of 300x300 jpeg jpg png 5 MB</small>
+                                <small>Minimum size of {{fileMinWidth}}x{{fileMinHeight}} <span
+                                        *ngFor="let type of fileTypes">{{type.split('/').pop()}} </span>
+                                    {{fileMaxSizeMb}}
+                                    MB
+                                </small>
                             </label>
                             <input class="form-control-file"
                                    type="file"
                                    accept="image/png, image/jpeg, image/jpg"
                                    id="attachment"
                                    name="attachment"
-                                   formControlName="attachment"
                                    #file
                                    (change)="onFileChange($event)"
                                    hidden>
-                            <div class="invalid-feedback"></div>
+                            <div class="invalid-feedback"
+                                 *ngIf="fileErrors">
+                                <p *ngFor="let error of fileErrors">
+                                    {{error}}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div id="deleteAttachment" class="delete-attachment d-none">&#9760;</div>
+                    <div class="delete-attachment"
+                         #fileDelete
+                         *ngIf="previewUrl"
+                         (click)="onPreviewDelete()">
+                        &#9760;
+                    </div>
                 </div>
             </div>
         </div>
