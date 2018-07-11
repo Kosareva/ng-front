@@ -26,10 +26,10 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
     initialized: boolean = false;
     fileValid: boolean = false;
 
-    fileMaxSizeMb = 5;
-    fileMinWidth = 300;
-    fileMinHeight = 300;
-    fileTypes = [
+    fileMaxSizeMb: number = 5;
+    fileMinWidth: number = 300;
+    fileMinHeight: number = 300;
+    fileTypes: string[] = [
         'image/jpeg',
         'image/jpg',
         'image/png'
@@ -42,16 +42,16 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
     ) {
     }
 
-    mbTokb(mb) {
+    mbTokb(mb: number) {
         return mb * 1024 * 1024;
     }
 
-    validateFileSize(file): Observable<any> {
+    validateFileSize(file, size: number): Observable<any> {
 
         return Observable.create((observer) => {
 
-            if (file.size > this.mbTokb(this.fileMaxSizeMb)) {
-                observer.error(`File size must be < ${this.fileMaxSizeMb} MB`);
+            if (file.size > this.mbTokb(size)) {
+                observer.error(`File size must be < ${size} MB`);
             }
             else {
                 observer.next(true);
@@ -61,11 +61,11 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
 
     }
 
-    validateFileType(file): Observable<any> {
+    validateFileType(file, types: string[]): Observable<any> {
 
         return Observable.create((observer) => {
 
-            if (this.fileTypes.indexOf(file.type) === -1) {
+            if (types.indexOf(file.type) === -1) {
                 observer.error(`Wrong file type`);
             }
             else {
@@ -76,42 +76,66 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
 
     }
 
-    validateFileDimension(file): Observable<any> {
+    validateFileDimension(file, minW: number, minH: number): Observable<any> {
 
         return Observable.create((obs) => {
 
-            const reader = new FileReader();
+            let img: any = new Image();
+            img.src = window.URL.createObjectURL(file);
+            let minWidth = minW;
+            let minHeight = minH;
 
-            reader.onerror = err => obs.error(err);
-            reader.onabort = err => obs.error(err);
-            reader.onload = () => obs.next(reader.result);
-            reader.onloadend = () => obs.complete();
+            img.onload = function () {
 
-            return reader.readAsDataURL(file);
+                let imgwidth = this.width;
+                let imgheight = this.height;
 
-        }).pipe(
-            concatMap(
-                (data) => {
-
-                    return Observable.create((obs) => {
-
-                        let img = new Image();
-                        img.src = data as string;
-
-                        let width = img.naturalWidth;
-                        let height = img.naturalHeight;
-
-                        if (width < this.fileMinWidth || height < this.fileMinHeight) {
-                            obs.error('Image is less than 300x300');
-                        }
-                        else {
-                            obs.next(true);
-                        }
-
-                    });
+                if (imgwidth < minWidth && imgheight < minHeight) {
+                    obs.error('Image is less than 300x300');
+                } else {
+                    obs.next(true);
                 }
-            )
-        );
+            };
+            img.onerror = err => obs.error(err);
+            img.onabort = err => obs.error(err);
+            img.onloadend = () => obs.complete();
+
+        });
+
+        // return Observable.create((obs) => {
+        //
+        //     const reader = new FileReader();
+        //
+        //     reader.onerror = err => obs.error(err);
+        //     reader.onabort = err => obs.error(err);
+        //     reader.onload = () => obs.next(reader.result);
+        //     reader.onloadend = () => obs.complete();
+        //
+        //     return reader.readAsDataURL(file);
+        //
+        // }).pipe(
+        //     concatMap(
+        //         (data) => {
+        //
+        //             return Observable.create((obs) => {
+        //
+        //                 let img = new Image();
+        //                 img.src = data as string;
+        //
+        //                 let width = img.naturalWidth;
+        //                 let height = img.naturalHeight;
+        //
+        //                 if (width < this.fileMinWidth || height < this.fileMinHeight) {
+        //                     obs.error('Image is less than 300x300');
+        //                 }
+        //                 else {
+        //                     obs.next(true);
+        //                 }
+        //
+        //             });
+        //         }
+        //     )
+        // );
 
     }
 
@@ -242,13 +266,13 @@ export class ContactUsFormComponent implements OnInit, OnDestroy {
         this.fileValid = false;
         let file = event.target.files[0] ? event.target.files[0] : null;
         if (!!file) {
-            this.validateFileType(file)
+            this.validateFileType(file, this.fileTypes)
                 .pipe(
                     concatMap(() => {
-                        return this.validateFileSize(file);
+                        return this.validateFileSize(file, this.fileMaxSizeMb);
                     }),
                     concatMap(() => {
-                        return this.validateFileDimension(file);
+                        return this.validateFileDimension(file, this.fileMinWidth, this.fileMinHeight);
                     })
                 ).subscribe(() => {
                     this.createFilePreview(file);

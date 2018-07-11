@@ -117,6 +117,16 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.page-main {
+  .main-content {
+    &__ {
+      &body {
+        border: 1px solid lightgrey;
+      }
+    }
+  }
+}
+
 //*********** contact form ***********
 .form-group {
   &__ {
@@ -151,7 +161,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .delete-attachment{
   @include pseudo;
-  right: 0;
+  right: 40px;
   top: 0;
   width: 40px;
   height: 40px;
