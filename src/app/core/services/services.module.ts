@@ -16,8 +16,7 @@ import {PreloaderLocalModule} from "../../shared/preloader-local/preloader-local
     ],
     providers: [
         ServicesService,
-
-    ],
+    ]
 })
 export class ServicesModule {
 }

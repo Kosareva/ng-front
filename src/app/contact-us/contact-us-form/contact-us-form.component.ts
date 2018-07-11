@@ -12,7 +12,6 @@ import {ToastrService} from 'ngx-toastr';
     templateUrl: './contact-us-form.component.html',
     styleUrls: ['./contact-us-form.component.scss']
 })
-
 export class ContactUsFormComponent implements OnInit, OnDestroy {
 
     @ViewChild('file') file;

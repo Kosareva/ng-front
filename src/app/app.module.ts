@@ -28,6 +28,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     exports: [
         AppRoutingModule,
     ],
+    providers: [
+        ErrorHandler,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestInterceptor,
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {

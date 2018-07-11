@@ -12,7 +12,7 @@ import {ContactUsFormModule} from "./contact-us-form/contact-us-form.module";
     imports: [
         CommonModule,
         ContactUsRoutingModule,
-        ContactUsFormModule,
+        ContactUsFormModule
     ],
 })
 export class ContactUsModule {
