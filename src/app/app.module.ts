@@ -9,17 +9,19 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ErrorHandler} from "./shared/error-handling/error-handler";
 import {RequestInterceptor} from "./shared/error-handling/http-interceptor";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ToastrModule } from 'ngx-toastr';
+import {ToastrModule} from 'ngx-toastr';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        PageNotFoundComponent,
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        BrowserAnimationsModule, // required animations module
-        ToastrModule.forRoot(), // ToastrModule added
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
         AppRoutingModule,
         CoreModule,
     ],

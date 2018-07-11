@@ -1,27 +1,30 @@
 <header>
     <div class="main-menu__responsive-navbar">
-        <a href="#topNavBar"
-           id="mainMenuToggle"
-           class="main-menu__toggle"
-           role="button"
-           aria-expanded="false"
-           aria-controls="main-menu"
-           aria-label="Open main menu">
+        <label
+                for="main-menu-toggle-checkbox"
+                id="mainMenuToggle"
+                class="main-menu__toggle"
+                role="button"
+                aria-expanded="false"
+                aria-controls="main-menu"
+                aria-label="Open main menu">
             <span class="fa fa-bars"></span>
-        </a>
+        </label>
     </div>
+    <input id="main-menu-toggle-checkbox" type="checkbox" class="main-menu__toggle-checkbox d-md-none invisible">
     <div id="topNavBar" class="top-header__container" aria-hidden="true">
         <div class="container">
             <div class="top-header">
                 <div class="row">
-                    <a href="#mainMenuToggle"
-                       id="mainMenuClose"
-                       class="main-menu__close"
-                       role="button"
-                       aria-expanded="false"
-                       aria-controls="main-menu">
+                    <label
+                            for="main-menu-toggle-checkbox"
+                            id="mainMenuClose"
+                            class="main-menu__close"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="main-menu">
                         <span class="fa fa-close"></span>
-                    </a>
+                    </label>
                     <div class="col-12 col-md-auto mb-2 mb-md-0 justify-content-center justify-content-md-start">
                         <!--<img src="img/header/Logo.png" alt="logo" class="logo">-->
                         <img src="assets/img/header/logo.svg" alt="logo" class="logo">
@@ -76,9 +79,10 @@
             </div>
         </div>
     </div>
-    <a href="#mainMenuToggle"
-       id="mainMenuBackdrop"
-       class="main-menu__backdrop"
-       tabindex="-1">
-    </a>
+    <label
+            for="main-menu-toggle-checkbox"
+            id="mainMenuBackdrop"
+            class="main-menu__backdrop"
+            tabindex="-1">
+    </label>
 </header>
