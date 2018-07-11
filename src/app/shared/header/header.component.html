@@ -11,7 +11,8 @@
             <span class="fa fa-bars"></span>
         </label>
     </div>
-    <input id="main-menu-toggle-checkbox" type="checkbox" class="main-menu__toggle-checkbox d-md-none invisible">
+    <input #toggler id="main-menu-toggle-checkbox" type="checkbox"
+           class="main-menu__toggle-checkbox d-md-none invisible">
     <div id="topNavBar" class="top-header__container" aria-hidden="true">
         <div class="container">
             <div class="top-header">
@@ -72,7 +73,7 @@
                     </div>
 
                     <div class="col-12 d-md-none">
-                        <app-nav-menu class="w-100"></app-nav-menu>
+                        <app-nav-menu class="w-100" (click)="toggler.click()"></app-nav-menu>
                     </div>
 
                 </div>
